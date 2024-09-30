@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from bson import json_util
 
-from handler.exceptioin_handler import ValidationException
+from handler.exception_handler import ValidationException
 
 
 @dataclass

@@ -4,7 +4,7 @@ import falcon
 import pytest
 from bson import json_util
 from falcon import testing
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, Mock
 
 from model.UserModel import UserModel, User, ValidationException
 from app import app
@@ -169,3 +169,25 @@ def test_find_all_users(mock_user_model):
     result = mock_user_model.find_all()
 
     assert result == json_users
+
+def test_validation_exception_handler():
+    ex = 'Error message'
+    req = Mock()
+    resp = Mock()
+    error = Mock()
+    ValidationException.validation_exception_handler(ex, req, resp, error)
+    assert resp.status == falcon.HTTP_400
+    assert resp.text == json.dumps({"message": str(ex)})
+
+def test_create_user_exception():
+    mock_collection = Mock()
+    mock_collection.insert_one.side_effect = Exception("Mocked exception")
+    user = User("John Doe", 30,"john@example.com")
+    with pytest.raises(Exception) as e:
+        try:
+            user_data = user.__dict__
+            mock_collection.insert_one(user_data)
+        except Exception as ex:
+            raise Exception("Error creating user")
+    assert str(e.value) == "Error creating user"
+    mock_collection.insert_one.assert_called_once_with(user.__dict__)

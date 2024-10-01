@@ -1,0 +1,17 @@
+# IDE settings
+.idea/
+
+# Python cache files
+__pycache__/
+
+# Coverage reports
+.coverage
+
+# User-specific or sensitive data
+user_data.json
+
+# Environment variables
+.env
+
+#Virtual env
+.venv/

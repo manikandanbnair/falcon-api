@@ -4,6 +4,7 @@ from service.UserService import UserModel, User
 from utils.routes import route
 
 @route("/users")
+@route("/users/email")
 class UserResource:
     def __init__(self,db):
         self.user_model = UserModel(db)

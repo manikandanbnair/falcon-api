@@ -9,4 +9,4 @@ class ValidationException(Exception):
     @staticmethod
     def validation_exception_handler(ex, req, resp, params):
         resp.status = falcon.HTTP_400
-        resp.media = {'error': ex.message}
+        resp.media = {'message': ex.message}

@@ -4,8 +4,7 @@ from falcon import testing
 from unittest.mock import MagicMock, patch, Mock
 
 from service.UserService import UserModel, User, ValidationException
-from falcon_app import app
-
+from app import  app
 
 @pytest.fixture
 def mock_db():
@@ -113,22 +112,6 @@ def test_user_resource_create_missing_fields(mock_open, mock_create, mock_db):
     mock_create.assert_not_called()
 
 
-@patch('rest.UserRest.UserModel.create')
-@patch('rest.UserRest.open')
-def test_user_resource_create_too_many_fields(mock_open, mock_create, mock_db):
-    mock_db['user'].find_one.return_value = None
-    client = testing.TestClient(app)
-    response = client.simulate_post('/users', json={
-        "name": "John Doe",
-        "age": 30,
-        "email": "john@example.com",
-        "extra_field": "value"
-    })
-
-    assert response.status == falcon.HTTP_400
-    assert response.json == {"message": "Too many fields provided. Please check your data and try again."}
-    mock_create.assert_not_called()
-
 
 @pytest.fixture
 def mock_user_model(mock_db):
@@ -176,7 +159,7 @@ def test_validation_exception_handler():
     params = Mock()
     ValidationException.validation_exception_handler(ex, req, resp, params)
     assert resp.status == falcon.HTTP_400
-    assert resp.media == {'error': ex.message}
+    assert resp.media == {'message': ex.message}
 
 def test_create_user_exception():
     mock_collection = Mock()

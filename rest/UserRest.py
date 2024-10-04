@@ -63,7 +63,7 @@ class UserResource:
                 file.truncate()
                 json.dump(old_data, file)
         except Exception:
-            raise ValidationException("Error in writing file")
+            raise ValidationException("Error in writing file.")
 
         resp_message = {"message": "Successfully created"}
         resp.status = falcon.HTTP_201

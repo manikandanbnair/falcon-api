@@ -1,7 +1,7 @@
 import falcon, json
 from handler.exception_handler import ValidationException
 from service.UserService import UserModel, User
-from utils.routes import route
+from routes.routes import route
 
 @route("/users")
 @route("/users/email")
@@ -37,10 +37,7 @@ class UserResource:
             resp.text = json.dumps({"message": "Missing required fields. Please check your data and try again."})
             return
 
-        if len(data) > len(required_fields):
-            resp.status = falcon.HTTP_400
-            resp.text = json.dumps({"message": "Too many fields provided. Please check your data and try again."})
-            return
+
 
         name = data.get("name")
         age = data.get("age")

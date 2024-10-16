@@ -51,7 +51,7 @@ def test_user_resource_get_all_users_no_user_present(mock_database_connection,cl
     mock_database_connection.users.delete_many({})
     response = client.simulate_get('/users')
     assert response.status == falcon.HTTP_200
-    assert response.json['Users'] == "No users present"
+    assert response.json['message'] == "No users present"
 
 
 @patch('rest.UserRest.open')
@@ -160,7 +160,7 @@ def test_user_resource_get_user_with_email_not_found( mock_database_connection,c
     db=mock_database_connection
     response = client.simulate_get('/users', params={'email': 'don@example.com'})
     assert response.status == falcon.HTTP_200
-    assert response.json == {'User': 'User not found'}
+    assert response.json == {'message': 'User not found'}
 
 
 def test_insert_user_raises_exception():

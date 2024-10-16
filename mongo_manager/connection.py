@@ -1,8 +1,7 @@
-import os
+import configparser
 import pymongo
-from dotenv import load_dotenv
-MongoClient = pymongo.MongoClient
 
+MongoClient = pymongo.MongoClient
 
 class DatabaseConnection:
     _instance = None
@@ -15,10 +14,12 @@ class DatabaseConnection:
 
     @staticmethod
     def connect_to_mongo():
-        load_dotenv()
-        mongo_host = os.getenv('MONGO_HOST')
-        mongo_port = int(os.getenv('MONGO_PORT'))
-        mongo_db_name = os.getenv('MONGO_DB_NAME')
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+
+        mongo_host = config['database']['MONGO_HOST']
+        mongo_port = int(config['database']['MONGO_PORT'])
+        mongo_db_name = config['database']['MONGO_DB_NAME']
 
         try:
             client = pymongo.MongoClient(
@@ -28,7 +29,6 @@ class DatabaseConnection:
             return client[mongo_db_name]
         except ConnectionError as e:
             raise Exception(f"Could not connect to MongoDB: {e}")
-
 
     def get_db(self):
         return self.client

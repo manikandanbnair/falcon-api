@@ -5,7 +5,7 @@ def route(path):
         return cls
     return decorator
 
-def register_routes(app,db):
+def register_routes(app):
     for path, resource in _routes:
-        app.add_route(path, resource(db))
+        app.add_route(path, resource())
 

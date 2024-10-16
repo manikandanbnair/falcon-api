@@ -15,15 +15,10 @@ class UserResource:
             users = self.user_model.find_all()
             userMessage = "Users"
             users_data = json.loads(users)
-            if not users_data:
-                users_data = "No users present"
         else:
             user = self.user_model.find_by_email(email)
             userMessage = "User"
             users_data = json.loads(user)
-            if not users_data:
-                users_data = "User not found"
-
         resp_message = {userMessage: users_data}
         resp.status = falcon.HTTP_200
         resp.text = json.dumps(resp_message)

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from bson import json_util
 
-from handler.exception_handler import ValidationException
+from handler.exception_handler import ValidationException, NotFoundException
 from mongo_manager.connection import DatabaseConnection
 from mongo_manager.mongo_manager import MongoManager
 
@@ -27,11 +27,15 @@ class UserModel:
     def find_all(self):
         users = self.mongo_manager.find_all()
         data = list(users)
+        if not data:
+            raise NotFoundException("No users present")
         return json_util.dumps(data)
 
 
     def find_by_email(self, email):
         user = self.mongo_manager.find_by_email(email)
+        if not user:
+            raise NotFoundException("User not found")
         return json_util.dumps(user)
 
     def exists_by_email(self, email):

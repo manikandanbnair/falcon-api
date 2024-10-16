@@ -33,15 +33,16 @@ To install the application and its dependencies, follow these steps:
 
 Before running the application, ensure that the following environment variables are set up correctly:
 
-### Step 1: Create a `.env` File
+### Step 1: Create a `config.ini` File
 
-Create a `.env` file in the root directory of the project.
+Create a config.ini file in the root directory of the project.
 
 ### Step 2: Add Environment Variables
 
-Add the following variables to your `.env` file:
+Add the following variables to your `config.ini` file:
 
 ```plaintext
+[database]
 MONGO_HOST=your_mongo_host
 MONGO_PORT=your_mongo_port
 MONGO_DB_NAME=your_database_name
@@ -51,7 +52,7 @@ MONGO_DB_NAME=your_database_name
 - **MONGO_PORT**: The port number on which your MongoDB server is running (default is usually `27017`).
 - **MONGO_DB_NAME**: The name of the database you want to connect to.
 
-### Step 3: Load the Environment Variables
+### Step 3: Load the configuration in python
 
 The application will automatically load these variables when it starts, so no additional action is needed.
 .

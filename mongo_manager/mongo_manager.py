@@ -1,9 +1,7 @@
 from mongo_manager.connection import DatabaseConnection
 
 class MongoManager:
-    # def __init__(self, db_connection, collection_name):
-    #     self.db_connection = db_connection
-    #     self.collection = self.db_connection[collection_name]
+
     db_connection = DatabaseConnection().get_db()
     @classmethod
     def insert(cls, user_data,collection_name):

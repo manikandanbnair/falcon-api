@@ -41,7 +41,7 @@ class UserModel:
     def exists_by_email(self, email):
         return self.mongo_manager.exists_by_email(email)
 
-    def user_validation(self,name,age,email):
+    def user_validation(self,age,email):
         if not isinstance(age,int) or age < 0:
             raise ValidationException("Invalid age")
         if self.exists_by_email(email):

@@ -42,7 +42,7 @@ class UserPost:
         age = data.get("age")
         email = data.get("email")
 
-        self.user_model.user_validation(name, age, email)
+        self.user_model.user_validation(age, email)
         user = User(name, age, email)
 
 
